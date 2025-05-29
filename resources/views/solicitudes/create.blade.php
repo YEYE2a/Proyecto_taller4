@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Solicitud</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="mb-4">Crear Solicitud</h2>
+
+    <form action="{{ route('solicitudes.store') }}" method="POST">
+        @csrf
+
+        <div class="mb-3">
+            <label for="tema" class="form-label">Tema</label>
+            <input type="text" name="tema" class="form-control" value="{{ old('tema') }}" required>
+            @error('tema') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea name="descripcion" class="form-control" rows="3" required>{{ old('descripcion') }}</textarea>
+            @error('descripcion') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="area" class="form-label">Área</label>
+            <select name="area" class="form-select" required>
+                <option value="TI" {{ old('area') == 'TI' ? 'selected' : '' }}>TI</option>
+                <option value="Contabilidad" {{ old('area') == 'Contabilidad' ? 'selected' : '' }}>Contabilidad</option>
+                <option value="Administrativo" {{ old('area') == 'Administrativo' ? 'selected' : '' }}>Administrativo</option>
+                <option value="Operativo" {{ old('area') == 'Operativo' ? 'selected' : '' }}>Operativo</option>
+            </select>
+            @error('area') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="fecha_registro" class="form-label">Fecha de Registro</label>
+            <input type="date" name="fecha_registro" class="form-control" value="{{ old('fecha_registro') }}" required>
+            @error('fecha_registro') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="fecha_cierre" class="form-label">Fecha de Cierre (opcional)</label>
+            <input type="date" name="fecha_cierre" class="form-control" value="{{ old('fecha_cierre') }}">
+            @error('fecha_cierre') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select name="estado" class="form-select" required>
+                <option value="Solicitado" {{ old('estado') == 'Solicitado' ? 'selected' : '' }}>Solicitado</option>
+                <option value="Aprobado" {{ old('estado') == 'Aprobado' ? 'selected' : '' }}>Aprobado</option>
+                <option value="Rechazado" {{ old('estado') == 'Rechazado' ? 'selected' : '' }}>Rechazado</option>
+            </select>
+            @error('estado') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="observaciones" class="form-label">Observaciones (opcional)</label>
+            <textarea name="observaciones" class="form-control">{{ old('observaciones') }}</textarea>
+            @error('observaciones') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">¿Es usuario externo?</label><br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="usuario_ext" id="usuario_ext_si" value="1" {{ old('usuario_ext') === '1' ? 'checked' : '' }}>
+                <label class="form-check-label" for="usuario_ext_si">Sí</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="usuario_ext" id="usuario_ext_no" value="0" {{ old('usuario_ext') === '0' ? 'checked' : '' }}>
+                <label class="form-check-label" for="usuario_ext_no">No</label>
+            </div>
+            @error('usuario_ext') <div class="text-danger">{{ $message }}</div> @enderror
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{ route('solicitudes.index') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+</body>
+</html>
